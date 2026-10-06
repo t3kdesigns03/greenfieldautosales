@@ -1,5 +1,12 @@
-import { inventory, type Body, type Vehicle, type VehicleImage } from "@/content/inventory";
-import { photos } from "@/content/photos.generated";
+/**
+ * Inventory types and pure helpers — safe to import from client components.
+ * Reading the actual inventory (Netlify Blobs + content/vehicles) lives in
+ * lib/inventoryData.ts, which is server-only.
+ */
+import type { Body, Vehicle, VehicleImage } from "@/content/types";
+import { slugify } from "@/lib/slug";
+
+export { slugify };
 
 export type LiveVehicle = Vehicle & {
   slug: string;
@@ -32,58 +39,31 @@ export const stateNames: Record<string, string> = {
   GA: "Georgia",
 };
 
-export function slugify(s: string) {
-  return s
-    .toLowerCase()
-    .replace(/["']/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
 const titleOf = (v: Vehicle) => [v.year, v.make, v.model, v.trim].filter(Boolean).join(" ");
 
-function decorate(v: Vehicle, newest: Set<number>): LiveVehicle {
-  const slug = v.slug ?? slugify(titleOf(v));
-  const imgs = (v.images?.length ? v.images : photos[slug]) ?? [];
+function decorate(v: Vehicle & { slug: string }, images: VehicleImage[], newest: Set<number>): LiveVehicle {
   const name = `${v.year} ${v.make} ${v.model}`;
   return {
     ...v,
-    slug,
     name,
     title: titleOf(v),
     isNew: newest.has(v.listingId),
-    images: imgs.map((im, i) => ({ ...im, alt: im.alt ?? `${name}${i === 0 ? "" : `, photo ${i + 1}`}` })),
+    images: images.map((im, i) => ({ ...im, alt: im.alt ?? `${name}${i === 0 ? "" : `, photo ${i + 1}`}` })),
   };
 }
 
+export const defaultSlug = (v: Vehicle) => v.slug ?? slugify(titleOf(v));
+
 /**
- * Every unit that should appear in inventory. "sold" never renders —
- * this is the only place inventory is read for cards and detail pages.
- * Default order: most recently listed first.
+ * Turn resolved vehicles (each with its final slug + images) into the list the
+ * site renders: sold units dropped, most recently listed first, top 3 flagged new.
  */
-export function liveVehicles(): LiveVehicle[] {
-  const live = inventory.filter((v) => v.status !== "sold");
+export function toLiveList(items: { v: Vehicle & { slug: string }; images: VehicleImage[] }[]): LiveVehicle[] {
+  const live = items.filter(({ v }) => v.status !== "sold");
   const newest = new Set(
-    [...live].sort((a, b) => b.listingId - a.listingId).slice(0, 3).map((v) => v.listingId),
+    [...live].sort((a, b) => b.v.listingId - a.v.listingId).slice(0, 3).map(({ v }) => v.listingId),
   );
-  const list = live.map((v) => decorate(v, newest)).sort((a, b) => b.listingId - a.listingId);
-  const seen = new Set<string>();
-  for (const v of list) {
-    if (seen.has(v.slug)) {
-      throw new Error(`Two vehicles share the slug "${v.slug}". Give one a unique \`slug\` in content/vehicles/.`);
-    }
-    seen.add(v.slug);
-  }
-  return list;
-}
-
-/** Sold units, for the home-page proof strip only. */
-export function soldVehicles() {
-  return inventory.filter((v) => v.status === "sold").map((v) => ({ ...v, name: `${v.year} ${v.make} ${v.model}` }));
-}
-
-export function getVehicle(slug: string): LiveVehicle | undefined {
-  return liveVehicles().find((v) => v.slug === slug);
+  return live.map(({ v, images }) => decorate(v, images, newest)).sort((a, b) => b.listingId - a.listingId);
 }
 
 export function formatPrice(price: Vehicle["price"]) {

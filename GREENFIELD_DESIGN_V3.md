@@ -23,7 +23,7 @@ Keep Grok's layout. Throw out Grok's colors. The colors come from the legacy sit
 
 Financing: the legacy site never mentions financing. It has no credit app, no payment estimates and no lender talk. So V2 drops the Financing page and its nav link, and redirects /financing to /about. If Luke ever confirms he offers something, it's one page to add back.
 
-Contact matches the legacy site: phone, address, hours, an email/message form, and value my trade. Text (641) 743-2700 is added because it's on the listings.
+Contact matches the legacy site: phone, address, hours, an email/message form, and value my trade. Text (641) 329-6186 is added because it's on the listings.
 
 ## Claude prompt
 
@@ -72,7 +72,7 @@ HOMEPAGE (app/page.tsx) — top to bottom
 3. Two panels side by side (stacked on phones):
    - "WHY BUY HERE" white card, three points each under a 3px red top rule: Family-owned since 2008 / Out-of-state vehicles ("Many come from Texas, New Mexico and Florida, so less winter rust." — only name states that appear in content/vehicles origin) / Trade-ins wanted.
    - Trade panel: black card, a thin black/white checkered strip across its top (CSS conic-gradient, 14px squares), "HAVE SOMETHING TO TRADE?", "Year, make, model, miles. We'll look it over and get back to you.", red pill "Value my trade →" to /trade.
-4. Visit band, charcoal #262626, three columns: VISIT THE LOT (address + Get directions), HOURS (from site.hoursSummary), REACH US (Call (641) 329-6186 · Text (641) 743-2700 · Email "Send us a message" → /contact#message).
+4. Visit band, charcoal #262626, three columns: VISIT THE LOT (address + Get directions), HOURS (from site.hoursSummary), REACH US (Call (641) 329-6186 · Text (641) 329-6186 · Email "Send us a message" → /contact#message).
 5. Footer black: small logo lockup (animate off), "© YEAR Greenfield Auto Sales · Greenfield, Iowa", "Listings also on Carsforsale" link.
 Remove from the homepage: the reviews section and the "Sold here: 560+ and counting" strip (keep their content in content/ for later, don't render them). No stat rows.
 

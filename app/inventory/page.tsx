@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import PageHeader from "@/components/PageHeader";
 import InventoryBrowser from "@/components/InventoryBrowser";
 import VehicleCard from "@/components/VehicleCard";
-import { liveVehicles } from "@/lib/inventory";
+import { getLiveVehicles } from "@/lib/inventoryData";
 import { site } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -14,15 +14,17 @@ export const metadata: Metadata = {
   openGraph: { url: "/inventory" },
 };
 
-export default function InventoryPage() {
-  const vehicles = liveVehicles();
+/** Rebuilt at most every minute; /admin saves revalidate it immediately. */
+export const revalidate = 60;
+
+export default async function InventoryPage() {
+  const vehicles = await getLiveVehicles();
   return (
     <>
       <PageHeader eyebrow={`${vehicles.length} on the lot · Greenfield, Iowa`} title="Shop the lot" compact>
         <p>
-          Asking prices and real miles. Questions about any of them? Call{" "}
-          <span className="whitespace-nowrap font-semibold text-fg">{site.phone.display}</span> or text{" "}
-          <span className="whitespace-nowrap font-semibold text-fg">{site.textPhone.display}</span>.
+          Asking prices and real miles. Questions about any of them? Call or text{" "}
+          <span className="whitespace-nowrap font-semibold text-fg">{site.phone.display}</span>.
         </p>
       </PageHeader>
       {/* Fallback = the full unfiltered grid (also what crawlers and no-JS visitors see). */}

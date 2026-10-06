@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CallBar from "@/components/CallBar";
 import JsonLd from "@/components/JsonLd";
+import PublicOnly from "@/components/PublicOnly";
 import { site } from "@/content/site";
 import { localBusinessSchema } from "@/lib/schema";
 import { allowIndexing } from "@/app/robots";
@@ -68,10 +69,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <JsonLd data={localBusinessSchema()} />
-        <Header />
+        <PublicOnly>
+          <Header />
+        </PublicOnly>
         <main id="main">{children}</main>
-        <Footer />
-        <CallBar />
+        <PublicOnly>
+          <Footer />
+          <CallBar />
+        </PublicOnly>
       </body>
     </html>
   );

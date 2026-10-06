@@ -21,3 +21,6 @@ Thumbs.db
 # raw listing photos (run `npm run photos` to generate committed WebP files)
 /public/inventory/*/raw/*
 !/public/inventory/*/raw/.gitkeep
+
+# local stand-in for Netlify Blobs (npm run dev / next start without Netlify)
+/.data/

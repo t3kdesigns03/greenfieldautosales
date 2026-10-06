@@ -34,10 +34,10 @@ export const site = {
     e164: "+16413296186",
   },
 
-  /** Text line (the number on the listings). Every "Text" button uses this. */
+  /** Text line. Same number as the lot line. Every "Text" button uses this. */
   textPhone: {
-    display: "(641) 743-2700",
-    e164: "+16417432700",
+    display: "(641) 329-6186",
+    e164: "+16413296186",
   },
 
   /**

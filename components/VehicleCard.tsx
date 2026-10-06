@@ -114,7 +114,21 @@ export default function VehicleCard({
             )}
           </>
         ) : (
-          <VehicleArt body={v.body} />
+          <>
+            <VehicleArt body={v.body} />
+            {v.carsForSaleUrl && (
+              <a
+                href={v.carsForSaleUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute bottom-2.5 right-2.5 z-[3] inline-flex min-h-[32px] items-center gap-1 rounded-full bg-night/70 px-2.5 text-[12.5px] font-semibold text-paper backdrop-blur-md hover:bg-night/85"
+              >
+                <Icon name="camera" className="h-3.5 w-3.5" />
+                Photos on original listing
+                <span className="sr-only"> for {v.name} (opens Carsforsale)</span>
+              </a>
+            )}
+          </>
         )}
 
         {/* badges */}

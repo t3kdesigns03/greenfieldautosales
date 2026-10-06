@@ -5,7 +5,7 @@
    (e.g. bg-go/10). Hex in the comment is the source of truth.
 
    BRAND: racing — red, black, chrome, checkered flags (the lot's real
-   identity, matched to Luke's existing logo). Token NAMES are kept from v1
+   identity, matched to the lot's existing logo). Token NAMES are kept from v1
    so components didn't have to change; read them as:
      brand / go / leaf  = racing red (fills / actions / red text)
      gold               = chrome (accents, eyebrows, focus)

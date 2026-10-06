@@ -11,9 +11,8 @@ import NoBreak from "@/components/NoBreak";
 import { CallBarShell } from "@/components/CallBar";
 import { CopyButton, ShareButton } from "@/components/ShareCopy";
 import { site, telHref, smsHref, fullAddress } from "@/content/site";
+import { getLiveVehicles, getLiveVehicle } from "@/lib/inventoryData";
 import {
-  liveVehicles,
-  getVehicle,
   formatPrice,
   bodyLabels,
   stateNames,
@@ -24,15 +23,20 @@ import { vehicleSchema } from "@/lib/schema";
 
 type Props = { params: Promise<{ slug: string }> };
 
-/** Only live (not sold) units are prebuilt. Sold or unknown slugs hit notFound() below. */
+/**
+ * Live units known at build time are prebuilt; anything added later in /admin
+ * renders on first request (dynamicParams). Sold or unknown slugs hit notFound().
+ * Rebuilt at most every minute; /admin saves revalidate the page immediately.
+ */
+export const revalidate = 60;
 
-export function generateStaticParams() {
-  return liveVehicles().map((v) => ({ slug: v.slug }));
+export async function generateStaticParams() {
+  return (await getLiveVehicles()).map((v) => ({ slug: v.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const v = getVehicle(slug);
+  const v = await getLiveVehicle(slug);
   if (!v) return {};
   const price = formatPrice(v.price);
   const miles = v.miles !== null ? `, ${v.miles.toLocaleString("en-US")} miles` : "";
@@ -57,7 +61,7 @@ const featureIcon: Record<string, IconName> = {
 
 export default async function VehiclePage({ params }: Props) {
   const { slug } = await params;
-  const v = getVehicle(slug);
+  const v = await getLiveVehicle(slug);
   if (!v) notFound();
 
   const quick: { icon: IconName; label: string; value: string }[] = [
@@ -90,7 +94,7 @@ export default async function VehiclePage({ params }: Props) {
   const shownSpecs = specs.filter((s): s is [string, string] => Boolean(s[1]));
   const keys = keyFeatures(v);
 
-  const others = liveVehicles()
+  const others = (await getLiveVehicles())
     .filter((o) => o.slug !== v.slug)
     .sort((a, b) => Number(b.body === v.body) - Number(a.body === v.body) || b.listingId - a.listingId)
     .slice(0, 3);

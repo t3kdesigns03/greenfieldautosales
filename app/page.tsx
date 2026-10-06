@@ -7,20 +7,24 @@ import { Silhouette } from "@/components/VehicleArt";
 import Icon, { type IconName } from "@/components/Icon";
 import { site, telHref, smsHref, mapsLink, fullAddress } from "@/content/site";
 import { home } from "@/content/copy";
-import { liveVehicles, soldVehicles, bodyLabels, shortMiles } from "@/lib/inventory";
+import { bodyLabels, shortMiles } from "@/lib/inventory";
+import { getLiveVehicles, soldStripVehicles } from "@/lib/inventoryData";
 import type { Body } from "@/content/inventory";
 
 export const metadata: Metadata = {
   title: { absolute: `${site.name} | Used Trucks, SUVs & Cars in Greenfield, Iowa` },
   description:
-    "Quality used cars, trucks and SUVs from a family-owned lot in Greenfield, Iowa, selling since 2008. Browse the lot, then call (641) 329-6186, text (641) 743-2700, or stop by 503 NE 6th St.",
+    "Quality used cars, trucks and SUVs from a family-owned lot in Greenfield, Iowa, selling since 2008. Browse the lot, then call or text (641) 329-6186, or stop by 503 NE 6th St.",
   alternates: { canonical: "/" },
   openGraph: { url: "/" },
 };
 
-export default function HomePage() {
-  const vehicles = liveVehicles();
-  const sold = soldVehicles();
+/** Rebuilt at most every minute; /admin saves revalidate it immediately. */
+export const revalidate = 60;
+
+export default async function HomePage() {
+  const vehicles = await getLiveVehicles();
+  const sold = soldStripVehicles();
   const featured = vehicles[0];
   const rail = vehicles.slice(0, 8);
   const bodies = (["truck", "suv", "van", "car"] as Body[])

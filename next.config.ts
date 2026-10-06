@@ -4,7 +4,7 @@ import type { NextConfig } from "next";
  * CUTOVER NOTE — redirects are NOT active in v1.
  *
  * Inventory stays on Carsforsale (https://www.greenfieldautosales.net) for now.
- * When Luke is ready to point greenfieldautosales.net at this site, add
+ * When the owner is ready to point greenfieldautosales.net at this site, add
  * redirects() for the old Carsforsale paths that have links / search history:
  *
  *   /contact                          -> /contact           (same path, keep)
