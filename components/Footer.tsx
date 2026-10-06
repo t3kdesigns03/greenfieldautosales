@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="h-px bg-gradient-to-r from-transparent via-gold/70 to-transparent" />
       <div className="container-x grid gap-10 py-12 md:grid-cols-[1.3fr_1fr_1fr_0.8fr]">
         <div>
-          <Logo tone="light" />
+          <Logo badgeClass="h-16 w-auto" wordmarkClass="h-[52px] w-auto" />
           <p className="mt-4 max-w-xs font-display text-[19px] leading-snug text-fg/90">{site.tagline}</p>
           <p className="mt-3 text-[15px] text-muted">
             Family-owned and selling in Greenfield since {site.since.month} {site.since.year}.

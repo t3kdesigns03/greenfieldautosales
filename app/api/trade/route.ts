@@ -4,10 +4,10 @@ import { validateLead } from "@/lib/trade";
 /**
  * POST /api/trade — trade-in leads.
  *
- * v1 has no backend vendor: the lead is logged (Vercel → Project → Logs,
+ * v1 has no backend vendor: the lead is logged (Netlify → Logs → Functions,
  * search "[trade-lead]") and the form shows success.
  *
- * Optional: set TRADE_WEBHOOK_URL in Vercel env vars to also forward each
+ * Optional: set TRADE_WEBHOOK_URL in the host's env vars to also forward each
  * lead as JSON (e.g. to a Zapier/Make webhook that texts or emails Luke).
  * See README "Getting trade leads to Luke".
  */

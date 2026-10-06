@@ -1,11 +1,12 @@
 import { ImageResponse } from "next/og";
 import { site } from "@/content/site";
-import { markDataUri } from "@/lib/markSvg";
+import { badgeDataUri, wordmarkDataUri } from "@/lib/markSvg";
 
 export const alt = `${site.name} — ${site.tagline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+/** Social card: the speed-badge lockup on carbon black with a red horizon glow. */
 export default function OgImage() {
   return new ImageResponse(
     (
@@ -16,24 +17,22 @@ export default function OgImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: 72,
-          background: "linear-gradient(165deg, #1F6B3A 0%, #164E2A 75%)",
-          color: "#FFFCF7",
+          padding: 64,
+          background:
+            "radial-gradient(70% 60% at 80% 0%, rgba(200,16,26,0.38) 0%, rgba(10,10,12,0) 70%), linear-gradient(180deg, #141418 0%, #0A0A0C 100%)",
+          color: "#F2F3F5",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-          <img src={markDataUri} width={112} height={112} alt="" />
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ fontSize: 54, fontWeight: 700, letterSpacing: 3 }}>GREENFIELD</div>
-            <div style={{ fontSize: 24, fontWeight: 700, letterSpacing: 12, color: "#C4A15A" }}>AUTO SALES</div>
-          </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
+          <img src={badgeDataUri} width={250} height={224} alt="" />
+          <img src={wordmarkDataUri} width={680} height={170} alt="" />
         </div>
-        <div style={{ fontSize: 60, fontWeight: 700, lineHeight: 1.1, maxWidth: 1000 }}>{site.tagline}</div>
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 28, color: "#F4EFE4" }}>
+        <div style={{ fontSize: 54, fontWeight: 700, lineHeight: 1.1, maxWidth: 1050 }}>{site.tagline}</div>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 28, color: "#C7CCD4" }}>
           <span>
             {site.address.city}, Iowa · Since {site.since.year}
           </span>
-          <span style={{ color: "#C4A15A", fontWeight: 700 }}>{site.phone.display}</span>
+          <span style={{ color: "#FF545E", fontWeight: 700 }}>{site.phone.display}</span>
         </div>
       </div>
     ),

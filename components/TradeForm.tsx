@@ -66,7 +66,7 @@ export default function TradeForm({ source = "trade-page", tone = "card" }: { so
         role="status"
         className={`${wrap} animate-rise-in text-center outline-none`}
       >
-        <span className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-full bg-go text-night">
+        <span className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-full bg-go text-white">
           <Icon name="check" className="h-7 w-7" strokeWidth={2.4} />
         </span>
         <h2 className="mt-4 text-[28px] font-semibold">Got it{first ? `, ${first}` : ""}.</h2>

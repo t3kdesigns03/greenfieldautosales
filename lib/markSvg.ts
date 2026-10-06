@@ -1,4 +1,14 @@
-/** The logo mark as a standalone SVG string (hex colors) for generated images. */
-export const markSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" rx="12" fill="#1F6B3A"/><path d="M15.5 21a8.5 8.5 0 0 1 17 0Z" fill="#C4A15A"/><path d="M6 21h36" stroke="#F4EFE4" stroke-width="2" stroke-linecap="round"/><path d="M6 27.5 18 24M42 27.5 30 24M6 34 15.5 28.5M42 34 32.5 28.5" stroke="#164E2A" stroke-width="1.6" stroke-linecap="round"/><path d="M11 42 22.6 21.6M37 42 25.4 21.6" stroke="#F4EFE4" stroke-width="2.6" stroke-linecap="round"/><path d="M24 41v-3.5M24 34.5v-2.6M24 29.4v-1.8" stroke="#C4A15A" stroke-width="1.8" stroke-linecap="round"/></svg>`;
+/**
+ * The logo as data URIs for generated images (apple-icon, Open Graph card).
+ * Server-only (uses Buffer). Art comes from components/brand/brandSvg.ts.
+ */
+import { badgeSvg, iconSvg, wordmarkSvg } from "@/components/brand/brandSvg";
 
-export const markDataUri = `data:image/svg+xml;base64,${Buffer.from(markSvg).toString("base64")}`;
+const toDataUri = (svg: string) => `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
+
+/** Compact badge (hex + G, no flags) — app icons. */
+export const markDataUri = toDataUri(iconSvg());
+/** Full badge with the crossed flags — social cards. */
+export const badgeDataUri = toDataUri(badgeSvg());
+/** Still GREENFIELD / AUTO SALES wordmark — social cards. */
+export const wordmarkDataUri = toDataUri(wordmarkSvg());

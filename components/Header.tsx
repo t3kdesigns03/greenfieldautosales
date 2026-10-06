@@ -3,15 +3,15 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import Logo, { LogoMark } from "@/components/Logo";
+import Logo from "@/components/Logo";
 import Icon from "@/components/Icon";
 import { site, telHref, fullAddress } from "@/content/site";
 import { useSaved } from "@/lib/saved";
 
 /**
  * One shared header (dark).
- * Under 768px: a short bar — mark, saved, call icon, menu. Menu opens a sheet.
- * 768px+: wordmark, nav, saved, phone button.
+ * Under 768px: badge + wordmark, saved, call icon, menu. Menu opens a sheet.
+ * 768px+: badge + wordmark, nav, saved, phone button.
  *
  * The mobile menu is rendered as a SIBLING of <header>, not inside it:
  * the header uses backdrop-filter, which would trap a fixed child inside
@@ -62,21 +62,21 @@ export default function Header() {
       >
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-2 focus:z-50 focus:rounded-lg focus:bg-go focus:px-4 focus:py-2 focus:text-night"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-2 focus:z-50 focus:rounded-lg focus:bg-go focus:px-4 focus:py-2 focus:text-white"
         >
           Skip to content
         </a>
 
-        <div className="container-x flex h-[var(--header-h)] items-center justify-between gap-3">
-          <Link href="/" className="flex min-h-tap items-center" aria-label="Greenfield Auto Sales, home">
-            <span className="flex items-center gap-2 md:hidden">
-              <LogoMark animate className="h-9 w-9" />
-              <span className="flex flex-col leading-none" aria-hidden="true">
-                <span className="font-display text-[16px] font-bold tracking-[0.04em] text-fg">GREENFIELD</span>
-                <span className="mt-0.5 text-[9.5px] font-bold tracking-[0.3em] text-gold">AUTO SALES</span>
-              </span>
-            </span>
-            <Logo animate tone="light" className="hidden md:inline-flex" />
+        <div className="container-x flex h-[var(--header-h)] items-center justify-between gap-2">
+          <Link href="/" className="flex min-h-tap min-w-0 items-center" aria-label="Greenfield Auto Sales, home">
+            {/* Phones: same badge + prismatic wordmark, scaled to fit 320px next to three 44px buttons */}
+            <Logo
+              animate
+              className="md:hidden"
+              badgeClass="h-10 w-auto xs:h-[46px]"
+              wordmarkClass="h-6 w-auto xs:h-[34px]"
+            />
+            <Logo animate className="hidden md:inline-flex" badgeClass="h-[62px] w-auto" wordmarkClass="h-[48px] w-auto" />
           </Link>
 
           <nav aria-label="Main" className="hidden md:block">
@@ -100,7 +100,7 @@ export default function Header() {
             </ul>
           </nav>
 
-          <div className="flex items-center gap-1">
+          <div className="flex shrink-0 items-center gap-0 xs:gap-1">
             <Link
               href={savedHref}
               className="relative inline-flex h-tap w-tap items-center justify-center rounded-full text-fg hover:bg-white/[0.06]"

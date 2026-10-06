@@ -31,7 +31,7 @@ export default function AboutPage() {
         <Reveal className="relative self-start overflow-hidden rounded-card bg-panel-2 p-6 text-paper">
           <div className="grain absolute inset-0" aria-hidden="true" />
           <div className="relative">
-            <LogoMark className="h-14 w-14" />
+            <LogoMark className="h-16 w-auto" />
             <p className="mt-4 font-display text-[26px] font-semibold leading-tight text-paper">{site.owner}</p>
             <p className="text-[15px] text-muted">Owner. Sole proprietor. The one who answers the phone.</p>
             <dl className="mt-5 space-y-2 border-t border-white/10 pt-4 text-[15px]">

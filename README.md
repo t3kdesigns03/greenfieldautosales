@@ -69,26 +69,28 @@ npm run photos           # resizes to 1600px WebP, makes blur previews, wires th
 
 `/trade` (and the empty-search state on `/inventory`) posts to `/api/trade`. That endpoint validates the lead, logs it, and shows the customer "Luke will call you".
 
-- **Where leads go right now:** Vercel → Project → **Logs**, search `[trade-lead]`. Nothing emails Luke yet.
-- **To forward leads:** set `TRADE_WEBHOOK_URL` in Vercel → Settings → Environment Variables, for example to a Zapier/Make webhook that texts or emails Luke. Each lead is POSTed there as JSON. **Do this before going live**, or leads will only sit in the logs.
+- **Where leads go right now:** Netlify → Site → **Logs → Functions** (the `/api/trade` function), search `[trade-lead]`. Nothing emails Luke yet.
+- **To forward leads (recommended before launch):** set `TRADE_WEBHOOK_URL` in Netlify → Site configuration → Environment variables, pointed at a Zapier/Make webhook that texts or emails Luke. Each lead is POSTed there as JSON.
+- **Simplest no-code option:** switch the form to **Netlify Forms** (add `data-netlify="true"` and a hidden `form-name` field to the trade form), and Netlify emails you every submission with no backend. Ask and I'll wire this up.
 
-## Deploy to Vercel
+## Deploy to Netlify
 
-1. Import `t3kdesigns03/greenfieldautosales` in Vercel (the framework is auto-detected as Next.js).
-2. Environment variables:
-   - `NEXT_PUBLIC_SITE_URL`: the public URL with no trailing slash (e.g. `https://greenfieldautosales.vercel.app` for now). Canonicals, the sitemap and JSON-LD use it.
+1. In Netlify, **Add new site → Import from Git**, pick `t3kdesigns03/greenfieldautosales`. The build command (`npm run build`) and the Next.js runtime come from `netlify.toml`.
+2. Environment variables (Site configuration → Environment variables):
+   - `NEXT_PUBLIC_SITE_URL`: the public URL with no trailing slash (e.g. `https://greenfieldautosales.netlify.app` for now). Canonicals, the sitemap and JSON-LD use it.
    - `TRADE_WEBHOOK_URL`: optional (see above).
-3. Deploy. Preview deployments are kept out of search (`app/robots.ts`).
+   - `NEXT_PUBLIC_ALLOW_INDEXING`: **leave unset** for now. The whole site is hidden from Google until this is `"true"` — on purpose, so a pre-launch demo never shows up in search.
+3. Deploy. To share the demo privately, use the Netlify deploy URL (or turn on password protection under Site configuration → Access & security).
 
-## Cutover: pointing the domain here
+## Cutover: going live on the real domain
 
-Do this only when Luke is ready to stop sending people to the Carsforsale site.
+Do this only when Luke is on board and ready to stop sending people to the Carsforsale site.
 
-1. **Before you switch:** every `carsForSaleUrl` currently points to `www.greenfieldautosales.net/details/...`. Once the domain moves, those links would loop back to this site. Update them to wherever Carsforsale serves the listings after cutover (your Carsforsale rep can give you the dealer-page URL), or remove them.
-2. Add the redirects listed in the comment at the top of `next.config.ts` (`/cars-for-sale` → `/inventory`, the body-type pages, `/home` → `/`, etc.). `/contact` already matches.
-3. In Vercel → Settings → Domains, add `greenfieldautosales.net` and `www.greenfieldautosales.net`.
-4. At the domain registrar, set the DNS records Vercel shows (usually an `A` record to `76.76.21.21` for the apex and a `CNAME` to `cname.vercel-dns.com` for `www`). Check Vercel's screen for the current values.
-5. Set `NEXT_PUBLIC_SITE_URL=https://www.greenfieldautosales.net` (or the apex, whichever you make primary) and redeploy.
+1. **Before you switch:** every `carsForSaleUrl` points to `www.greenfieldautosales.net/details/...`. Once the domain moves here, those links would loop back to this site. Update them to wherever Carsforsale serves the listings after cutover (ask the Carsforsale rep for the dealer-page URL), or remove them.
+2. Add the redirects listed in the comment at the top of `next.config.ts` (`/cars-for-sale` → `/inventory`, the body-type pages, `/home` → `/`, etc.). On Netlify these can also go in `netlify.toml` as `[[redirects]]`.
+3. In Netlify → Domain management, add `greenfieldautosales.net` and `www.greenfieldautosales.net`.
+4. At the domain registrar, point DNS at Netlify (either move the nameservers to Netlify DNS, or add the `A`/`CNAME` records Netlify shows). Use the values on Netlify's domain screen.
+5. Set `NEXT_PUBLIC_SITE_URL` to the live URL **and** `NEXT_PUBLIC_ALLOW_INDEXING="true"`, then redeploy. Remove the `X-Robots-Tag` block from `netlify.toml`.
 6. In Google Business Profile, confirm the website link and hours.
 
 ## Ground rules for content
@@ -101,4 +103,5 @@ Do this only when Luke is ready to stop sending people to the Carsforsale site.
 
 - Built 375px-first: no horizontal scroll at 320/375/768/1280, tap targets of 44px or more, and a sticky call/text bar under 768px.
 - `prefers-reduced-motion` turns off the logo draw-in, the reveals and the shimmer.
-- Fonts (Fraunces, Source Sans 3) are self-hosted from `app/fonts` under the SIL Open Font License.
+- Fonts (Saira for headlines, Source Sans 3 for body) are self-hosted from `app/fonts` under the SIL Open Font License. The logo letters are Saira too, outlined to paths.
+- Logo art lives in `components/brand/` (`brandPaths.ts` is generated by `scripts/brand/gen.py` — see its header; `brandSvg.ts` assembles it). Change colors/motion there.

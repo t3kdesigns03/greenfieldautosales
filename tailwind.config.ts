@@ -26,6 +26,7 @@ const config: Config = {
         muted: token("muted"),
         brand: { DEFAULT: token("brand"), deep: token("brand-deep") },
         go: token("go"),
+        "on-go": token("on-go"),
         leaf: token("leaf"),
         gold: token("gold"),
         cream: token("cream"),
@@ -35,7 +36,7 @@ const config: Config = {
         signal: token("signal"),
       },
       fontFamily: {
-        display: ["var(--font-display)", "Georgia", "serif"],
+        display: ["var(--font-display)", "system-ui", "sans-serif"],
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
       },
       minHeight: { tap: "44px" },
@@ -49,7 +50,7 @@ const config: Config = {
       },
       backgroundImage: {
         "hero-gradient":
-          "radial-gradient(90% 70% at 85% 0%, rgb(var(--gold) / 0.16) 0%, transparent 60%), radial-gradient(80% 60% at 0% 100%, rgb(var(--brand) / 0.45) 0%, transparent 70%), linear-gradient(180deg, rgb(var(--panel)) 0%, rgb(var(--night)) 100%)",
+          "radial-gradient(90% 70% at 85% 0%, rgb(var(--brand) / 0.30) 0%, transparent 60%), radial-gradient(80% 60% at 0% 100%, rgb(var(--brand-deep) / 0.40) 0%, transparent 70%), linear-gradient(180deg, rgb(var(--panel)) 0%, rgb(var(--night)) 100%)",
       },
       keyframes: {
         "draw-road": {

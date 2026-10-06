@@ -7,20 +7,19 @@ import CallBar from "@/components/CallBar";
 import JsonLd from "@/components/JsonLd";
 import { site } from "@/content/site";
 import { localBusinessSchema } from "@/lib/schema";
+import { allowIndexing } from "@/app/robots";
 
 /*
  * Fonts are self-hosted (app/fonts, SIL Open Font License) so builds never
- * depend on reaching Google Fonts. Fraunces = wordmark + headlines,
- * Source Sans 3 = UI and body.
+ * depend on reaching Google Fonts. Saira = headlines (same family the logo
+ * letters are cut from), Source Sans 3 = UI and body.
  */
 const display = localFont({
-  src: [
-    { path: "./fonts/fraunces-latin-opsz-normal.woff2", style: "normal", weight: "100 900" },
-    { path: "./fonts/fraunces-latin-opsz-italic.woff2", style: "italic", weight: "100 900" },
-  ],
+  src: [{ path: "./fonts/saira-latin-wdth-wght-normal.woff2", style: "normal", weight: "100 900" }],
   variable: "--font-display",
   display: "swap",
-  fallback: ["Georgia", "serif"],
+  fallback: ["system-ui", "Segoe UI", "Arial", "sans-serif"],
+  declarations: [{ prop: "font-stretch", value: "50% 125%" }],
 });
 
 const sans = localFont({
@@ -49,10 +48,12 @@ export const metadata: Metadata = {
     locale: "en_US",
   },
   twitter: { card: "summary_large_image" },
+  // Belt-and-suspenders with robots.ts: keep the pre-launch build out of search.
+  ...(allowIndexing ? {} : { robots: { index: false, follow: false } }),
 };
 
 export const viewport: Viewport = {
-  themeColor: "#164E2A",
+  themeColor: "#0A0A0C",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",

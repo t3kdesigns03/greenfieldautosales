@@ -28,7 +28,7 @@ export function CallBarShell({ textBody, children }: { textBody?: string; childr
         {children}
         <a
           href={telHref}
-          className="flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-full bg-go px-4 text-[16.5px] font-bold text-night active:scale-[0.98]"
+          className="flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-full bg-go px-4 text-[16.5px] font-bold text-white shadow-[0_8px_24px_-12px_rgb(var(--go)/0.9)] active:scale-[0.98]"
         >
           <Icon name="phone" className="h-5 w-5" strokeWidth={2.2} />
           <span>

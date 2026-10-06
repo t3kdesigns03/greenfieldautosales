@@ -2,10 +2,14 @@ import type { MetadataRoute } from "next";
 import { site } from "@/content/site";
 
 /**
- * Vercel preview deployments are kept out of search. Production allows all.
+ * Search visibility is OFF by default. This is a pre-launch build, so it must
+ * not show up in Google until it's really live. To allow indexing (at cutover),
+ * set NEXT_PUBLIC_ALLOW_INDEXING="true" in Netlify's environment variables.
  */
+export const allowIndexing = process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true";
+
 export default function robots(): MetadataRoute.Robots {
-  if (process.env.VERCEL_ENV && process.env.VERCEL_ENV !== "production") {
+  if (!allowIndexing) {
     return { rules: { userAgent: "*", disallow: "/" } };
   }
   return {

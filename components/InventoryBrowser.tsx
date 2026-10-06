@@ -347,7 +347,7 @@ export default function InventoryBrowser({ vehicles }: { vehicles: LiveVehicle[]
               <Icon name="filter" className="h-5 w-5" />
               <span className="hidden xs:inline">Filters</span>
               {nActive > 0 && (
-                <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-go px-1 text-[12px] font-bold text-night">
+                <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-go px-1 text-[12px] font-bold text-white">
                   {nActive}
                 </span>
               )}

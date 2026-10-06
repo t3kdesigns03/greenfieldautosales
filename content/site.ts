@@ -24,7 +24,7 @@ export const site = {
   since: { year: 2008, month: "July" },
 
   /** The new site's canonical origin. Change this when the domain is pointed here. */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://greenfieldautosales.vercel.app",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://greenfieldautosales.netlify.app",
 
   /** Inventory system of record (Carsforsale). Not replaced in phase 1. */
   inventorySourceUrl: "https://www.greenfieldautosales.net/cars-for-sale",

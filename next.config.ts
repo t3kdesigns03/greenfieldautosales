@@ -25,6 +25,14 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  images: {
+    // Local WebP (public/inventory/...) needs nothing here. These patterns only
+    // matter if a vehicle's `images` point at a remote URL (e.g. a future photo
+    // sync or a CDN). Safe to leave in place.
+    remotePatterns: [
+      { protocol: "https", hostname: "*.carsforsale.com" },
+    ],
+  },
 };
 
 export default nextConfig;

@@ -1,0 +1,18 @@
+# Netlify deploy config for Greenfield Auto Sales.
+# The official Next.js runtime plugin handles the App Router, image
+# optimization, and the /api/trade function automatically.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Search engines are blocked site-wide by robots.ts / metadata until
+# NEXT_PUBLIC_ALLOW_INDEXING="true" is set. Extra header as a backstop
+# while this is a pre-launch build. Remove this block at cutover.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"

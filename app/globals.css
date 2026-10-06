@@ -4,34 +4,42 @@
    Values are space-separated RGB channels so Tailwind opacity works
    (e.g. bg-go/10). Hex in the comment is the source of truth.
 
-   BRAND MATCH: when we have Luke's logo + current site colors, re-key
-   --brand / --brand-deep / --gold here. Everything else follows.
+   BRAND: racing — red, black, chrome, checkered flags (the lot's real
+   identity, matched to Luke's existing logo). Token NAMES are kept from v1
+   so components didn't have to change; read them as:
+     brand / go / leaf  = racing red (fills / actions / red text)
+     gold               = chrome (accents, eyebrows, focus)
+   Logo art: components/brand/ (keep its hexes in sync with these).
    ------------------------------------------------------------------ */
 :root {
-  /* surfaces */
-  --night: 11 15 13;          /* #0B0F0D  page background */
-  --panel: 19 25 22;          /* #131916  cards, header */
-  --panel-2: 27 35 31;        /* #1B231F  raised: inputs, chips */
-  --panel-3: 36 46 41;        /* #242E29  hover / pressed */
-  --fg: 238 242 236;          /* #EEF2EC  main text */
-  --muted: 152 166 158;       /* #98A69E  secondary text */
+  /* surfaces — carbon black */
+  --night: 10 10 12;          /* #0A0A0C  page background */
+  --panel: 20 20 24;          /* #141418  cards, header */
+  --panel-2: 29 29 34;        /* #1D1D22  raised: inputs, chips */
+  --panel-3: 39 39 46;        /* #27272E  hover / pressed */
+  --fg: 242 243 245;          /* #F2F3F5  main text */
+  --muted: 160 164 173;       /* #A0A4AD  secondary text */
 
   /* brand */
-  --brand: 31 107 58;         /* #1F6B3A  field green — fills, logo */
-  --brand-deep: 22 78 42;     /* #164E2A  field-deep */
-  --go: 74 190 120;           /* #4ABE78  primary action on dark */
-  --leaf: 126 216 162;        /* #7ED8A2  prices + green text on dark */
-  --gold: 196 161 90;         /* #C4A15A  Greenfield accent, horizon, focus */
-  --cream: 244 239 228;       /* #F4EFE4 */
-  --paper: 255 252 247;       /* #FFFCF7 */
-  --ink: 26 26 23;            /* #1A1A17 */
-  --rust: 140 58 47;          /* #8C3A2F  sold / alert ONLY */
-  --rust-fg: 226 133 118;     /* #E28576  rust text on dark */
-  --signal: 63 191 107;       /* #3FBF6B  "open now" dot */
+  --brand: 200 16 26;         /* #C8101A  racing red — fills, logo */
+  --brand-deep: 122 8 16;     /* #7A0810  deep red */
+  --go: 218 18 30;            /* #DA121E  primary action (white text on it) */
+  --on-go: 255 255 255;       /* #FFFFFF  text on --go */
+  --leaf: 255 84 94;          /* #FF545E  prices + red text on dark (AA on panels) */
+  --gold: 199 204 212;        /* #C7CCD4  chrome accent, eyebrows, focus */
+  --cream: 228 231 236;       /* #E4E7EC  light chrome */
+  --paper: 255 255 255;       /* #FFFFFF */
+  --ink: 10 10 12;            /* #0A0A0C */
+  --rust: 150 22 32;          /* #961620  sold / alert ONLY */
+  --rust-fg: 255 138 143;     /* #FF8A8F  alert text on dark */
+  --signal: 63 191 107;       /* #3FBF6B  "open now" dot (status green stays green) */
 
   --callbar-h: 68px;
-  --header-h: 60px;
+  --header-h: 64px;
   color-scheme: dark;
+}
+@media (min-width: 768px) {
+  :root { --header-h: 76px; }
 }
 
 @tailwind base;
@@ -57,8 +65,8 @@
   }
   h1, h2, h3 {
     @apply font-display text-fg;
-    font-optical-sizing: auto;
-    letter-spacing: -0.015em;
+    font-stretch: 108%;
+    letter-spacing: -0.01em;
     line-height: 1.1;
     text-wrap: balance;
   }
@@ -69,7 +77,7 @@
     outline-offset: 2px;
     border-radius: 8px;
   }
-  ::selection { background: rgb(var(--gold) / 0.4); color: rgb(var(--paper)); }
+  ::selection { background: rgb(var(--go) / 0.55); color: rgb(var(--paper)); }
   input[type="search"]::-webkit-search-cancel-button { filter: invert(1) opacity(.6); }
   select option { background: rgb(var(--panel-2)); color: rgb(var(--fg)); }
 }
@@ -86,7 +94,7 @@
     @apply inline-flex min-h-tap items-center justify-center gap-2 rounded-full px-5 py-2 text-center text-[16px] font-semibold leading-tight transition-[transform,background-color,box-shadow,border-color,color] duration-150 active:scale-[0.98];
   }
   .btn-go {
-    @apply btn bg-go text-night shadow-[0_8px_24px_-10px_rgb(var(--go)/0.6)] hover:bg-leaf;
+    @apply btn bg-go text-on-go shadow-[0_8px_24px_-10px_rgb(var(--go)/0.7)] hover:brightness-110;
   }
   .btn-gold {
     @apply btn bg-gold text-night hover:brightness-110;
@@ -136,6 +144,28 @@
   to { background-position: 0 0; }
 }
 
+/* ------------------------------------------------------------------
+   Logo motion (components/brand/brandSvg.ts). CSS-only on purpose:
+   the reduced-motion rule below freezes it.
+   - prism: light travels around the GREENFIELD letter edges (8s loop)
+   - glint: a Spyder-style sweep, chrome G first, then the letters (6s)
+   ------------------------------------------------------------------ */
+.gas-prism { animation: gas-prism 8s linear infinite; }
+@keyframes gas-prism {
+  from { transform: translateX(-600px); }
+  to { transform: translateX(0); }
+}
+.gas-glint { transform: translateX(0) skewX(-18deg); animation: gas-glint 6s ease-in-out infinite; }
+.gas-glint--g { animation-name: gas-glint-g; }
+@keyframes gas-glint {
+  0%, 58% { transform: translateX(0) skewX(-18deg); }
+  76%, 100% { transform: translateX(860px) skewX(-18deg); }
+}
+@keyframes gas-glint-g {
+  0%, 48% { transform: translateX(0) skewX(-18deg); }
+  60%, 100% { transform: translateX(220px) skewX(-18deg); }
+}
+
 /* Reveal-on-scroll (components/Reveal.tsx adds .is-in).
    Only hidden when JS is running, so content is never lost without it. */
 .js .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
@@ -150,4 +180,5 @@
   }
   .js .reveal { opacity: 1; transform: none; }
   .shimmer { animation: none; }
+  .gas-prism, .gas-glint { animation: none !important; }
 }
