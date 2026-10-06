@@ -1,0 +1,23 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+*.tsbuildinfo
+
+# env
+.env*.local
+
+# vercel
+.vercel
+
+# os / editor
+.DS_Store
+Thumbs.db
+*.log
+
+# raw listing photos (run `npm run photos` to generate committed WebP files)
+/public/inventory/*/raw/*
+!/public/inventory/*/raw/.gitkeep
