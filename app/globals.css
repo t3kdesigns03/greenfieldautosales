@@ -35,11 +35,17 @@
   --signal: 63 191 107;       /* #3FBF6B  "open now" dot (status green stays green) */
 
   --callbar-h: 68px;
-  --header-h: 64px;
+  --header-h: 80px;
   color-scheme: dark;
 }
 @media (min-width: 768px) {
-  :root { --header-h: 76px; }
+  :root { --header-h: 96px; }
+}
+@media (min-width: 1024px) {
+  :root { --header-h: 104px; }
+}
+@media (min-width: 1280px) {
+  :root { --header-h: 112px; }
 }
 
 @tailwind base;

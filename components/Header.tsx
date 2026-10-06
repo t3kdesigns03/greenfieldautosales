@@ -4,18 +4,20 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Logo from "@/components/Logo";
+import WavingFlags from "@/components/brand/WavingFlags";
 import Icon from "@/components/Icon";
 import { site, telHref, fullAddress } from "@/content/site";
 import { useSaved } from "@/lib/saved";
 
 /**
  * One shared header (dark).
- * Under 768px: badge + wordmark, saved, call icon, menu. Menu opens a sheet.
- * 768px+: badge + wordmark, nav, saved, phone button.
+ * Under 1024px: badge + wordmark, saved, call icon, menu. Menu opens a sheet.
+ * 1024px+: badge + wordmark, nav, saved, phone button.
+ * Two checkered flags wave behind the logo at every size (brand/WavingFlags).
  *
  * The mobile menu is rendered as a SIBLING of <header>, not inside it:
  * the header uses backdrop-filter, which would trap a fixed child inside
- * the 60px bar.
+ * the bar.
  */
 export default function Header() {
   const pathname = usePathname();
@@ -56,7 +58,7 @@ export default function Header() {
   return (
     <>
       <header
-        className={`sticky top-0 z-40 border-b transition-[background-color,border-color] duration-200 ${
+        className={`sticky top-0 z-40 overflow-x-clip border-b transition-[background-color,border-color] duration-200 ${
           scrolled || open ? "border-white/[0.08] bg-night/85 backdrop-blur-xl" : "border-transparent bg-night"
         }`}
       >
@@ -68,25 +70,38 @@ export default function Header() {
         </a>
 
         <div className="container-x flex h-[var(--header-h)] items-center justify-between gap-2">
-          <Link href="/" className="flex min-h-tap min-w-0 items-center" aria-label="Greenfield Auto Sales, home">
-            {/* Phones: same badge + prismatic wordmark, scaled to fit 320px next to three 44px buttons */}
+          <Link
+            href="/"
+            className="relative isolate flex min-w-0 items-center self-stretch px-1"
+            aria-label="Greenfield Auto Sales, home"
+          >
+            {/* Two crossed checkered flags waving behind the whole lockup */}
+            <WavingFlags className="pointer-events-none absolute opacity-90 inset-y-0 -left-3 -right-3 -z-10 h-full w-[calc(100%+1.5rem)] md:-left-5 md:w-[calc(100%+2.5rem)]" />
+            {/* Phones: badge + prismatic wordmark, scaled to fit 320px next to three 44px buttons */}
             <Logo
               animate
-              className="md:hidden"
-              badgeClass="h-10 w-auto xs:h-[46px]"
-              wordmarkClass="h-6 w-auto xs:h-[34px]"
+              badgeFlags={false}
+              className="lg:hidden"
+              badgeClass="h-11 w-auto xs:h-[54px] md:h-[68px]"
+              wordmarkClass="h-[27px] w-auto xs:h-[38px] md:h-[50px]"
             />
-            <Logo animate className="hidden md:inline-flex" badgeClass="h-[62px] w-auto" wordmarkClass="h-[48px] w-auto" />
+            <Logo
+              animate
+              badgeFlags={false}
+              className="hidden lg:inline-flex"
+              badgeClass="h-[70px] w-auto xl:h-[84px]"
+              wordmarkClass="h-[54px] w-auto xl:h-[64px]"
+            />
           </Link>
 
-          <nav aria-label="Main" className="hidden md:block">
+          <nav aria-label="Main" className="hidden lg:block">
             <ul className="flex items-center gap-0.5">
               {site.nav.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
                     aria-current={isActive(item.href) ? "page" : undefined}
-                    className={`relative inline-flex min-h-tap items-center rounded-full px-3 text-[15px] font-semibold transition-colors lg:px-3.5 ${
+                    className={`relative inline-flex min-h-tap items-center whitespace-nowrap rounded-full px-3 text-[15px] font-semibold transition-colors lg:px-3.5 ${
                       isActive(item.href) ? "text-fg" : "text-muted hover:text-fg"
                     }`}
                   >
@@ -113,13 +128,13 @@ export default function Header() {
                 </span>
               )}
             </Link>
-            <a href={telHref} className="btn-go ml-1 hidden md:inline-flex">
+            <a href={telHref} className="btn-go ml-1 hidden whitespace-nowrap lg:inline-flex">
               <Icon name="phone" className="h-[18px] w-[18px]" />
               {site.phone.display}
             </a>
             <a
               href={telHref}
-              className="inline-flex h-tap w-tap items-center justify-center rounded-full text-leaf hover:bg-white/[0.06] md:hidden"
+              className="inline-flex h-tap w-tap items-center justify-center rounded-full text-leaf hover:bg-white/[0.06] lg:hidden"
               aria-label={`Call ${site.phone.display}`}
             >
               <Icon name="phone" className="h-[22px] w-[22px]" />
@@ -127,7 +142,7 @@ export default function Header() {
             <button
               ref={menuBtn}
               type="button"
-              className="inline-flex h-tap w-tap items-center justify-center rounded-full text-fg hover:bg-white/[0.06] md:hidden"
+              className="inline-flex h-tap w-tap items-center justify-center rounded-full text-fg hover:bg-white/[0.06] lg:hidden"
               aria-expanded={open}
               aria-controls="mobile-menu"
               aria-label={open ? "Close menu" : "Open menu"}
@@ -143,7 +158,7 @@ export default function Header() {
       <div
         id="mobile-menu"
         hidden={!open}
-        className="fixed inset-x-0 bottom-[calc(var(--callbar-h)+env(safe-area-inset-bottom))] top-[var(--header-h)] z-40 overflow-y-auto bg-night md:hidden"
+        className="fixed inset-x-0 bottom-[calc(var(--callbar-h)+env(safe-area-inset-bottom))] top-[var(--header-h)] z-40 overflow-y-auto bg-night md:bottom-0 lg:hidden"
       >
         <nav aria-label="Mobile" className="container-x py-3">
           <ul className="divide-y divide-white/[0.08]">

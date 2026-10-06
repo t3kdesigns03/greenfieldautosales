@@ -161,6 +161,7 @@ export function wordmarkInner(uid: string, { animated = true }: WordmarkOptions 
 ${animated ? `<g clip-path="url(#${uid}-letters)"><rect class="gas-glint gas-glint--wm" x="-160" y="0" width="90" height="110" fill="url(#${uid}-sweep)"/></g>` : ""}
 <g mask="url(#${uid}-edge)"><rect class="${animated ? "gas-prism" : ""}" x="0" y="0" width="1200" height="150" fill="url(#${uid}-prism)"/></g>
 <rect x="${rule.x1}" y="${rule.y}" width="${rule.x2 - rule.x1}" height="3" fill="url(#${uid}-rule)"/>
+<path d="${W.autoSales}" fill="none" stroke="#000" stroke-width="6" stroke-linejoin="round" opacity=".9"/>
 <path d="${W.autoSales}" fill="url(#${uid}-silver)"/>`;
 }
 

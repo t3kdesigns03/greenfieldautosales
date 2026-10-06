@@ -23,6 +23,8 @@ type Props = {
   /** Tailwind classes sizing the badge / wordmark (heights). */
   badgeClass?: string;
   wordmarkClass?: string;
+  /** Small crossed flags on the badge. Off when big flags fly behind the whole lockup (header). */
+  badgeFlags?: boolean;
 };
 
 export function LogoMark({
@@ -45,13 +47,14 @@ export default function Logo({
   className,
   badgeClass = "h-12 w-auto",
   wordmarkClass = "h-10 w-auto",
+  badgeFlags = true,
 }: Props) {
   if (variant === "mark") {
     return <Badge className={className} glint={animate} title="Greenfield Auto Sales" />;
   }
   return (
     <span className={`inline-flex items-center gap-1.5 ${className ?? ""}`}>
-      <Badge className={`shrink-0 ${badgeClass}`} glint={animate} />
+      <Badge className={`shrink-0 ${badgeClass}`} glint={animate} flags={badgeFlags} />
       <Wordmark className={`shrink-0 ${wordmarkClass}`} animated={animate} />
       <span className="sr-only">Greenfield Auto Sales</span>
     </span>
