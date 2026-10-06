@@ -8,9 +8,9 @@ import { about } from "@/content/copy";
 import { site, telHref } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: "About Luke & the Lot",
+  title: "About Us",
   description:
-    "Greenfield Auto Sales is Luke Daughenbaugh's family-owned used car lot in Greenfield, Iowa, selling since July 2008. Here's how buying works: come look, bring a mechanic, pay cash or use your own bank.",
+    "Greenfield Auto Sales is a family-owned used car and truck lot in Greenfield, Iowa, selling since July 2008. Here's how buying works: come look, bring a mechanic, pay cash or use your own bank.",
   alternates: { canonical: "/about" },
   openGraph: { url: "/about" },
 };
@@ -32,8 +32,8 @@ export default function AboutPage() {
           <div className="grain absolute inset-0" aria-hidden="true" />
           <div className="relative">
             <LogoMark className="h-16 w-auto" />
-            <p className="mt-4 font-display text-[26px] font-semibold leading-tight text-paper">{site.owner}</p>
-            <p className="text-[15px] text-muted">Owner. Sole proprietor. The one who answers the phone.</p>
+            <p className="mt-4 font-display text-[26px] font-semibold leading-tight text-paper">{site.name}</p>
+            <p className="text-[15px] text-muted">Used cars, trucks and SUVs. Family-owned.</p>
             <dl className="mt-5 space-y-2 border-t border-white/10 pt-4 text-[15px]">
               <div className="flex justify-between gap-4">
                 <dt className="text-muted">Selling since</dt>

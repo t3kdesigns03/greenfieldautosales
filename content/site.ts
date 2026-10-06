@@ -18,9 +18,7 @@ export type DayHours = {
 export const site = {
   name: "Greenfield Auto Sales",
   shortName: "Greenfield Auto",
-  owner: "Luke Daughenbaugh",
-  ownerFirst: "Luke",
-  /** Sole proprietorship, selling cars since July 2008 */
+  /** Selling cars since July 2008 */
   since: { year: 2008, month: "July" },
 
   /** The new site's canonical origin. Change this when the domain is pointed here. */
@@ -36,7 +34,7 @@ export const site = {
     e164: "+16413296186",
   },
 
-  /** Text line (the number in Luke's listings). Every "Text" button uses this. */
+  /** Text line (the number on the listings). Every "Text" button uses this. */
   textPhone: {
     display: "(641) 743-2700",
     e164: "+16417432700",
@@ -76,7 +74,7 @@ export const site = {
     { label: "Sunday", value: "Closed" },
   ],
 
-  tagline: "Straight prices. Low-rust trucks. Luke answers the phone.",
+  tagline: "Quality used cars, trucks and SUVs in Greenfield, Iowa.",
 
   /**
    * Hero lot photo. Drop a real photo of the lot in /public (e.g. /public/lot.jpg,

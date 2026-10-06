@@ -9,7 +9,7 @@ type State = "idle" | "sending" | "done" | "failed";
 
 /**
  * The trade-in lead form. POSTs JSON to /api/trade.
- * `source` is recorded with the lead so Luke can tell where it came from.
+ * `source` is recorded with the lead so we can tell where it came from.
  */
 export default function TradeForm({ source = "trade-page", tone = "card" }: { source?: string; tone?: "card" | "plain" }) {
   const uid = useId();
@@ -71,7 +71,7 @@ export default function TradeForm({ source = "trade-page", tone = "card" }: { so
         </span>
         <h2 className="mt-4 text-[28px] font-semibold">Got it{first ? `, ${first}` : ""}.</h2>
         <p className="mx-auto mt-2 max-w-sm text-[18px] text-fg/85">
-          Luke will call you at <strong className="whitespace-nowrap">{lead.phone}</strong> about your{" "}
+          We&apos;ll get back to you at <strong className="whitespace-nowrap">{lead.phone}</strong> about your{" "}
           {lead.year} {lead.make} {lead.model}.
         </p>
         <p className="mt-4 text-[15px] text-muted">
@@ -160,7 +160,7 @@ export default function TradeForm({ source = "trade-page", tone = "card" }: { so
         </div>
         <div className="mt-4">
           <label htmlFor={id("note")} className="field-label">
-            Anything Luke should know?
+            Anything else we should know?
           </label>
           <textarea
             id={id("note")}
@@ -185,7 +185,7 @@ export default function TradeForm({ source = "trade-page", tone = "card" }: { so
 
       {state === "failed" && (
         <p role="alert" className="mt-5 rounded-xl border border-rust/50 bg-rust/15 p-3 text-[15px] text-rust-fg">
-          That didn&apos;t go through. Check the fields above, or just call Luke at{" "}
+          That didn&apos;t go through. Check the fields above, or just call us at{" "}
           <a href={telHref} className="font-bold underline">
             {site.phone.display}
           </a>
@@ -198,7 +198,7 @@ export default function TradeForm({ source = "trade-page", tone = "card" }: { so
           <span className="text-leaf">*</span> required. We only use your number to call you about this.
         </p>
         <button type="submit" className="btn-go w-full sm:w-auto" disabled={state === "sending"}>
-          {state === "sending" ? "Sending…" : "Send to Luke"}
+          {state === "sending" ? "Sending…" : "Send"}
           {state !== "sending" && <Icon name="arrow" className="h-5 w-5" />}
         </button>
       </div>

@@ -18,7 +18,6 @@ export function localBusinessSchema() {
     telephone: site.phone.e164,
     image: `${site.url}/opengraph-image`,
     logo: `${site.url}/icon.svg`,
-    founder: { "@type": "Person", name: site.owner },
     foundingDate: "2008-07",
     address: {
       "@type": "PostalAddress",

@@ -20,7 +20,7 @@ const v: Vehicle = {
   doors: 2,
   vin: "1FTNF20F72EC25932",
   highlights: ["7.3 Power Stroke diesel", "Long bed", "Mechanically sound", "Runs and drives excellent"],
-  caveat: "Luke notes this one does have rust.",
+  caveat: "Seller notes this one does have rust.",
   description:
     "Just in 2002 Ford F250 regular cab 2wd long bed with the 7.3 Powerstroke Diesel. Runs and drives excellent, mechanically sound, does have rust. $5,000.",
   carsForSaleUrl: "https://www.greenfieldautosales.net/details/used-2002-ford-f-250-super-duty/117623594",

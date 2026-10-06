@@ -7,15 +7,15 @@ import { site, telHref } from "@/content/site";
 export const metadata: Metadata = {
   title: "Trade In Your Vehicle",
   description:
-    "Tell Greenfield Auto Sales about your trade: year, make, model, miles and condition. Luke will call you back with a straight answer. No obligation.",
+    "Tell Greenfield Auto Sales about your trade: year, make, model, miles and condition. We'll get back to you with a straight answer. No obligation.",
   alternates: { canonical: "/trade" },
   openGraph: { url: "/trade" },
 };
 
 const steps = [
   { title: "Tell us about it", body: "Year, make, model, miles, and how it runs. Takes a minute." },
-  { title: "Luke calls you", body: "He'll ask a few questions and talk through what it might be worth to him." },
-  { title: "Bring it by", body: "If it makes sense for both of you, bring it to the lot so he can look it over." },
+  { title: "We get back to you", body: "We'll ask a few questions and talk through what it might be worth." },
+  { title: "Bring it by", body: "If it makes sense for both of us, bring it to the lot so we can look it over." },
 ];
 
 export default function TradePage() {
@@ -23,8 +23,7 @@ export default function TradePage() {
     <>
       <PageHeader eyebrow="Trade-ins wanted" title="What are you driving now?">
         <p>
-          Tell us about your vehicle and {site.ownerFirst} will call you back. No obligation, and no one will hound you
-          if it doesn&apos;t work out.
+          Tell us about your vehicle and we&apos;ll get back to you. No obligation, and no pressure if it doesn&apos;t work out.
         </p>
       </PageHeader>
 

@@ -92,7 +92,7 @@ export function formatPrice(price: Vehicle["price"]) {
 }
 
 export function formatMiles(miles: number | null) {
-  if (miles === null) return "Miles: ask Luke";
+  if (miles === null) return "Miles: call to ask";
   return `${miles.toLocaleString("en-US")} mi`;
 }
 

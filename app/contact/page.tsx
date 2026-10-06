@@ -17,7 +17,7 @@ export default function ContactPage() {
   return (
     <>
       <PageHeader eyebrow="Contact" title="Call, text, or stop by">
-        <p>The fastest way to an answer is a phone call. {site.ownerFirst} picks up.</p>
+        <p>Call, text, or stop by the lot. We&apos;re happy to help.</p>
       </PageHeader>
 
       <div className="container-x grid gap-6 py-8 md:grid-cols-2 md:gap-8 md:py-12">

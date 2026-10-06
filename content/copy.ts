@@ -1,19 +1,19 @@
 /**
- * content/copy.ts — words on the pages. Plain language, Luke's voice.
- * Rules: no invented awards, no financing rates, no staff who don't exist.
+ * content/copy.ts — words on the pages. Small-town professional: plain,
+ * friendly, business voice ("we"). No names, no invented awards, no rates.
  */
 
 export const home = {
-  heroEyebrow: "Family-owned in Greenfield, Iowa",
-  // The hero headline is the one sentence in site.tagline (reused in the footer).
-  heroSub: "A small used car and truck lot on NE 6th Street. Come look, ask questions, take your time.",
+  heroEyebrow: "Greenfield, Iowa",
+  heroTitle: "Find your next vehicle at Greenfield Auto Sales",
+  heroSub: "Quality used cars, trucks and SUVs on NE 6th Street. Browse what's on the lot, then call, text or stop by.",
   heroCtaPrimary: "See what's on the lot",
-  heroCtaSecondary: "Call Luke",
+  heroCtaSecondary: "Call us",
 
   proofPoints: [
     {
       title: "Family-owned since 2008",
-      body: "Luke has run this lot himself since July 2008. Same name on the sign, same guy on the phone.",
+      body: "Locally owned and selling used cars and trucks in Greenfield since July 2008.",
       icon: "home",
     },
     {
@@ -23,7 +23,7 @@ export const home = {
     },
     {
       title: "Trade-ins wanted",
-      body: "Got something to trade? Tell us about it. Luke will call you with a straight answer.",
+      body: "Got something to trade? Tell us about it and we'll get back to you with a straight answer.",
       icon: "swap",
     },
   ] as const,
@@ -37,16 +37,16 @@ export const home = {
    */
   reviews: [
     {
-      headline: "Luke is straightforward.",
-      body: "Tells you what a car is and what it isn't. No runaround on the price.",
+      headline: "Straightforward to deal with.",
+      body: "Honest about each vehicle, and no runaround on the price.",
     },
     {
       headline: "Worth the drive from Missouri.",
       body: "Buyers have come up from Missouri for a vehicle here and said the trip was worth it.",
     },
     {
-      headline: "He sent me down the street.",
-      body: "When Luke didn't have the right vehicle, he pointed the buyer to another lot instead of pushing something that wasn't a fit.",
+      headline: "No pressure.",
+      body: "When the right vehicle wasn't on the lot, buyers were pointed elsewhere instead of being pushed into something that wasn't a fit.",
     },
     {
       headline: "Family lot. Limited rust.",
@@ -56,15 +56,15 @@ export const home = {
 
   tradeTitle: "Have something to trade?",
   tradeBody:
-    "Tell us the year, make, model and miles. Luke looks it over and calls you back. No obligation, no pressure.",
+    "Tell us the year, make, model and miles. We'll look it over and get back to you. No obligation, no pressure.",
 };
 
 export const about = {
-  title: "A small lot with one name on it",
+  title: "About Greenfield Auto Sales",
   intro: [
-    "Greenfield Auto Sales is Luke Daughenbaugh's lot on NE 6th Street in Greenfield. He's been selling used cars and trucks here since July 2008. It's a family operation, not a franchise.",
-    "Luke buys a lot of his vehicles out of state, where the roads don't see as much salt. That means less rust underneath than most cars that have spent their life in Iowa.",
-    "If he doesn't have what you need, he'll tell you so. He has sent buyers down the street to another lot when that's where the right vehicle was.",
+    "Greenfield Auto Sales is a family-owned used car and truck lot at 503 NE 6th Street in Greenfield, Iowa, selling since July 2008.",
+    "Many of our vehicles come from out of state, where the roads see less salt. That means less rust underneath than most vehicles that have spent their life in Iowa.",
+    "Looking for something we don't have right now? Call or text and tell us what you're after.",
   ],
   howTitle: "How buying works here",
   how: [
@@ -82,7 +82,7 @@ export const about = {
     },
     {
       title: "Drive it home",
-      body: "Call ahead and ask Luke what to bring for the paperwork, so there's no second trip.",
+      body: "Call ahead and ask what to bring for the paperwork, so there's no second trip.",
     },
   ],
 };
@@ -94,11 +94,11 @@ export const financing = {
   options: [
     {
       title: "Cash or check",
-      body: "Ask Luke what form of payment works for the vehicle you're buying before you come in.",
+      body: "Ask us what form of payment works for the vehicle you're buying before you come in.",
     },
     {
       title: "Your own bank or credit union",
-      body: "Get a loan from the bank or credit union you already use. They'll usually want the year, make, model, miles and price, which you can get from the listing or from Luke. Many people call their lender first so they know their budget before they shop.",
+      body: "Get a loan from the bank or credit union you already use. They'll usually want the year, make, model, miles and price, which you can get from the listing or from us. Many people call their lender first so they know their budget before they shop.",
     },
   ],
   notTitle: "What we don't do",
@@ -108,5 +108,5 @@ export const financing = {
     "We don't advertise rates or promise approval. That's between you and your lender.",
   ],
   closer:
-    "Not sure what your bank will need from us? Call Luke and ask.",
+    "Not sure what your bank will need from us? Give us a call and ask.",
 };

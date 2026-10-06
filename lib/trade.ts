@@ -62,7 +62,7 @@ export function validateLead(input: Partial<Record<keyof TradeLead, unknown>>): 
   else if (!/^\d{4}$/.test(lead.year) || y < 1950 || y > nextYear) errors.year = "Use a 4-digit year, like 2014.";
   if (!lead.make) errors.make = "Enter the make, like Ford.";
   if (!lead.model) errors.model = "Enter the model, like F-150.";
-  if (!lead.name) errors.name = "Enter your name so Luke knows who he's calling.";
+  if (!lead.name) errors.name = "Enter your name so we know who to get back to.";
   const digits = lead.phone.replace(/\D/g, "");
   if (!lead.phone) errors.phone = "Enter a phone number.";
   else if (digits.length < 10 || digits.length > 11) errors.phone = "Enter a 10-digit phone number.";

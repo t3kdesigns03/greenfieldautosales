@@ -8,8 +8,8 @@ import { validateLead } from "@/lib/trade";
  * search "[trade-lead]") and the form shows success.
  *
  * Optional: set TRADE_WEBHOOK_URL in the host's env vars to also forward each
- * lead as JSON (e.g. to a Zapier/Make webhook that texts or emails Luke).
- * See README "Getting trade leads to Luke".
+ * lead as JSON (e.g. to a Zapier/Make webhook that texts or emails the lot).
+ * See README "Getting trade leads to the lot".
  */
 export async function POST(req: Request) {
   let body: Record<string, unknown>;

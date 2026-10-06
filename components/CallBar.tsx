@@ -33,7 +33,7 @@ export function CallBarShell({ textBody, children }: { textBody?: string; childr
           <Icon name="phone" className="h-5 w-5" strokeWidth={2.2} />
           <span>
             <span className="hidden xs:inline">Call </span>
-            {children ? "Luke" : site.phone.display}
+            {children ? "us" : site.phone.display}
           </span>
         </a>
         <a

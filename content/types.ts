@@ -45,9 +45,9 @@ export type Vehicle = {
   origin?: string;
   /** Short, seller-stated facts from the listing description. Nothing invented. */
   highlights?: string[];
-  /** The listing description, in Luke's words (phone numbers stripped). */
+  /** The listing description, in the listing's words (phone numbers stripped). */
   description?: string;
-  /** A condition caveat Luke states himself, shown plainly on the page. */
+  /** A condition caveat the seller states, shown plainly on the page. */
   caveat?: string;
   /** Full options list from the listing */
   features?: string[];

@@ -14,8 +14,7 @@ export default function NotFound() {
       <p className="eyebrow">Wrong turn</p>
       <h1 className="mt-2 text-[36px] font-semibold sm:text-[48px]">That page isn&apos;t here.</h1>
       <p className="mt-3 max-w-lg text-[18px] text-muted">
-        If you were looking at a vehicle, it may have sold. Take a look at what&apos;s on the lot now, or call{" "}
-        {site.ownerFirst}.
+        If you were looking at a vehicle, it may have sold. Take a look at what&apos;s on the lot now, or give us a call.
       </p>
       <div className="mt-6 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
         <Link href="/inventory" className="btn-go">

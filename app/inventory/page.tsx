@@ -20,8 +20,9 @@ export default function InventoryPage() {
     <>
       <PageHeader eyebrow={`${vehicles.length} on the lot · Greenfield, Iowa`} title="Shop the lot" compact>
         <p>
-          Asking prices and real miles. Questions about any of them? {site.ownerFirst} picks up at{" "}
-          <span className="whitespace-nowrap font-semibold text-fg">{site.phone.display}</span>.
+          Asking prices and real miles. Questions about any of them? Call{" "}
+          <span className="whitespace-nowrap font-semibold text-fg">{site.phone.display}</span> or text{" "}
+          <span className="whitespace-nowrap font-semibold text-fg">{site.textPhone.display}</span>.
         </p>
       </PageHeader>
       {/* Fallback = the full unfiltered grid (also what crawlers and no-JS visitors see). */}

@@ -74,7 +74,7 @@ export default function Footer() {
       <div className="border-t border-white/[0.07]">
         <div className="container-x flex flex-col gap-2 py-5 text-[14px] text-muted sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {year} {site.name} · {site.owner}, owner
+            © {year} {site.name} · {site.address.city}, Iowa
           </p>
           <p>
             Listings are also on{" "}

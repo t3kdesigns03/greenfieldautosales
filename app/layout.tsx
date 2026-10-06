@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     template: `%s | ${site.name}`,
   },
   description:
-    "Family-owned used car and truck lot in Greenfield, Iowa since 2008. Straight prices, low-rust out-of-state vehicles, and Luke answers the phone.",
+    "Family-owned used car and truck lot in Greenfield, Iowa since 2008. Quality used cars, trucks and SUVs at 503 NE 6th St. Call (641) 329-6186.",
   applicationName: site.name,
   formatDetection: { telephone: true, address: true },
   openGraph: {

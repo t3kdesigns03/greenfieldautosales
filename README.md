@@ -65,7 +65,7 @@ npm run photos           # resizes to 1600px WebP, makes blur previews, wires th
 - Cars without photos show a "Photos coming soon" placeholder, plus a link to the original listing on the detail page.
 - Photo upload from a dashboard (the backend) is planned for later. The `images` field on a vehicle already takes `{ src, width, height }`, so uploaded URLs drop straight in.
 
-## Getting trade leads to Luke
+## Getting trade leads to the lot
 
 `/trade` (and the empty-search state on `/inventory`) posts to `/api/trade`. That endpoint validates the lead, logs it, and shows the customer "Luke will call you".
 

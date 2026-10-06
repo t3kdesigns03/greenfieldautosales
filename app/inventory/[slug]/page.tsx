@@ -95,13 +95,13 @@ export default async function VehiclePage({ params }: Props) {
     .sort((a, b) => Number(b.body === v.body) - Number(a.body === v.body) || b.listingId - a.listingId)
     .slice(0, 3);
 
-  const textBody = `Hi Luke, is the ${v.title}${typeof v.price === "number" ? ` (${formatPrice(v.price)})` : ""} still available?`;
+  const textBody = `Hi, is the ${v.title}${typeof v.price === "number" ? ` (${formatPrice(v.price)})` : ""} still available?`;
 
   const badges = [
     ...(v.isNew ? [{ text: "New arrival", cls: "bg-gold text-night" }] : []),
     ...(v.titleStatus === "Clean" ? [{ text: "Clean title", cls: "bg-white/[0.08] text-fg" }] : []),
     ...(v.origin ? [{ text: `From ${stateNames[v.origin] ?? v.origin}`, cls: "bg-white/[0.08] text-fg" }] : []),
-    ...(v.highlights?.some((h) => /no rust/i.test(h)) ? [{ text: "No rust (per Luke)", cls: "bg-go/15 text-leaf" }] : []),
+    ...(v.highlights?.some((h) => /no rust/i.test(h)) ? [{ text: "No rust (per seller)", cls: "bg-go/15 text-leaf" }] : []),
   ];
 
   return (
@@ -158,7 +158,7 @@ export default async function VehiclePage({ params }: Props) {
               <div className="mt-5 grid gap-2.5">
                 <a href={telHref} className="btn-go text-[17px]">
                   <Icon name="phone" className="h-5 w-5" />
-                  Call Luke · {site.phone.display}
+                  Call {site.phone.display}
                 </a>
                 <a href={smsHref(textBody)} className="btn-ghost text-[17px]">
                   <Icon name="text" className="h-5 w-5" />
@@ -207,11 +207,11 @@ export default async function VehiclePage({ params }: Props) {
             </ul>
           </section>
 
-          {/* Luke's notes */}
+          {/* Seller's notes */}
           {(v.highlights?.length || v.description || v.caveat) && (
             <section className="card p-5 sm:p-6" aria-labelledby="notes-title">
               <h2 id="notes-title" className="text-[24px] font-semibold">
-                From {site.ownerFirst}
+                Seller&apos;s notes
               </h2>
               {v.highlights && (
                 <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
@@ -246,7 +246,7 @@ export default async function VehiclePage({ params }: Props) {
               <div className="text-[15.5px]">
                 <p className="font-bold">A note on the miles</p>
                 <p className="mt-1 text-fg/80">
-                  This one has {v.miles!.toLocaleString("en-US")} miles. Ask {site.ownerFirst} what he knows about its history,
+                  This one has {v.miles!.toLocaleString("en-US")} miles. Ask us what we know about its history,
                   and you&apos;re welcome to bring your own mechanic before you buy.
                 </p>
               </div>
@@ -310,7 +310,7 @@ export default async function VehiclePage({ params }: Props) {
               </div>
             )}
             <p className="mt-4 text-[13.5px] text-muted">
-              Details come from our listing. Confirm anything that matters to you with {site.ownerFirst} before you drive out.
+              Details come from our listing. Confirm anything that matters to you with us before you drive out.
             </p>
           </section>
 

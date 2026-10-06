@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import VehicleCard from "@/components/VehicleCard";
 import OpenStatus from "@/components/OpenStatus";
-import NoBreak from "@/components/NoBreak";
 import Reveal from "@/components/Reveal";
 import { Silhouette } from "@/components/VehicleArt";
 import Icon, { type IconName } from "@/components/Icon";
-import { site, telHref, mapsLink, fullAddress } from "@/content/site";
+import { site, telHref, smsHref, mapsLink, fullAddress } from "@/content/site";
 import { home } from "@/content/copy";
 import { liveVehicles, soldVehicles, bodyLabels, shortMiles } from "@/lib/inventory";
 import type { Body } from "@/content/inventory";
@@ -14,7 +13,7 @@ import type { Body } from "@/content/inventory";
 export const metadata: Metadata = {
   title: { absolute: `${site.name} | Used Trucks, SUVs & Cars in Greenfield, Iowa` },
   description:
-    "Straight prices, low-rust out-of-state trucks and SUVs, and a family-owned lot that's been selling in Greenfield, Iowa since 2008. Browse the lot with photos and prices, or call Luke at (641) 329-6186.",
+    "Quality used cars, trucks and SUVs from a family-owned lot in Greenfield, Iowa, selling since 2008. Browse the lot, then call (641) 329-6186, text (641) 743-2700, or stop by 503 NE 6th St.",
   alternates: { canonical: "/" },
   openGraph: { url: "/" },
 };
@@ -50,8 +49,8 @@ export default function HomePage() {
           <div className="animate-rise-in">
             <OpenStatus />
             <p className="eyebrow mt-5">{home.heroEyebrow}</p>
-            <h1 className="mt-3 text-[40px] font-semibold leading-[1.03] xs:text-[44px] sm:text-[56px] lg:text-[66px]">
-              <NoBreak text={site.tagline} />
+            <h1 className="mt-3 text-[38px] font-semibold leading-[1.05] xs:text-[42px] sm:text-[54px] lg:text-[62px]">
+              {home.heroTitle}
             </h1>
             <p className="mt-4 max-w-lg text-[17.5px] text-muted">{home.heroSub}</p>
 
@@ -88,22 +87,29 @@ export default function HomePage() {
               ))}
             </ul>
 
-            <dl className="mt-7 flex max-w-lg flex-wrap gap-x-8 gap-y-3 border-t border-white/[0.08] pt-5">
-              <div>
-                <dt className="text-[13px] text-muted">On the lot now</dt>
-                <dd className="font-display text-[28px] font-bold leading-tight">{vehicles.length}</dd>
-              </div>
-              {soldLabel && (
-                <div>
-                  <dt className="text-[13px] text-muted">Sold through the lot</dt>
-                  <dd className="font-display text-[28px] font-bold leading-tight">{soldLabel}</dd>
-                </div>
-              )}
-              <div>
-                <dt className="text-[13px] text-muted">Selling since</dt>
-                <dd className="font-display text-[28px] font-bold leading-tight">{site.since.year}</dd>
-              </div>
-            </dl>
+            {/* Every way to reach the lot, same as the original site plus text */}
+            <ul className="mt-7 grid max-w-lg grid-cols-2 gap-x-6 gap-y-1 border-t border-white/[0.08] pt-5" aria-label="Contact">
+              {[
+                { href: telHref, icon: "phone" as IconName, label: "Call", value: site.phone.display },
+                { href: smsHref(), icon: "text" as IconName, label: "Text", value: site.textPhone.display },
+                { href: mapsLink, icon: "pin" as IconName, label: "Visit", value: site.address.street, external: true },
+                { href: "/contact", icon: "clock" as IconName, label: "Hours", value: "Mon–Sat" },
+              ].map((c) => (
+                <li key={c.label}>
+                  <a
+                    href={c.href}
+                    {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className="group flex min-h-[52px] items-center gap-3 rounded-lg py-1.5"
+                  >
+                    <Icon name={c.icon} className="h-5 w-5 shrink-0 text-leaf" />
+                    <span className="leading-tight">
+                      <span className="block text-[12.5px] text-muted">{c.label}</span>
+                      <span className="block whitespace-nowrap text-[16px] font-semibold group-hover:text-leaf">{c.value}</span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {featured && (

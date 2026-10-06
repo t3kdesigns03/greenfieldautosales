@@ -418,8 +418,7 @@ export default function InventoryBrowser({ vehicles }: { vehicles: LiveVehicle[]
             <div className="rounded-card border border-dashed border-white/15 bg-panel/60 p-5 sm:p-7">
               <h2 className="text-[26px] font-semibold">Nothing on the lot matches that right now.</h2>
               <p className="mt-2 text-[16.5px] text-muted">
-                Inventory turns over fast. Call {site.ownerFirst} and tell him what you&apos;re after. If he doesn&apos;t have
-                it, he&apos;ll tell you who might. Got something to trade? Start there.
+                Inventory turns over fast. Call or text and tell us what you&apos;re after. Got something to trade? Start there.
               </p>
               <div className="mt-4 flex flex-col gap-2 sm:flex-row">
                 <button type="button" onClick={clearAll} className="btn-ghost">
@@ -432,7 +431,7 @@ export default function InventoryBrowser({ vehicles }: { vehicles: LiveVehicle[]
               </div>
             </div>
             <h2 className="mt-10 text-[26px] font-semibold">Tell us about your trade</h2>
-            <p className="mt-1 text-[16px] text-muted">Luke will call you back.</p>
+            <p className="mt-1 text-[16px] text-muted">We&apos;ll get back to you.</p>
             <div className="mt-4">
               <TradeForm source="inventory-empty" />
             </div>
