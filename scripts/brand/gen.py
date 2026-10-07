@@ -10,7 +10,8 @@ turns that into the badge / wordmark / icon SVGs.
 Run (Python 3 + fonttools):
   1. Download Saira from Google Fonts (OFL) and make two static instances:
        fonttools varLib.instancer "Saira-Italic[wdth,wght].ttf" wght=900 wdth=112.5 -o SairaI-900-112.ttf
-       fonttools varLib.instancer "Saira[wdth,wght].ttf"        wght=600 wdth=125   -o Saira-600-125.ttf
+       fonttools varLib.instancer "Saira[wdth,wght].ttf"        wght=900 wdth=112.5 -o Saira-900-112.ttf
+     (app/fonts/saira-latin-wdth-wght-normal.woff2 works as the upright source.)
   2. FONTS=<folder with those .ttf> python scripts/brand/gen.py components/brand
 """
 import json, math, os, sys
@@ -159,11 +160,13 @@ G_D, G_B = fit_text("SairaI-900-112.ttf", "G", (56, 76, 88, 98))
 # Wordmark (viewBox 0 0 600 150)
 #   GREENFIELD  — red chrome, prismatic edge
 #   red rule
-#   A U T O  S A L E S — chrome, tracked out
+#   AUTO SALES — heavy white chrome, centred
 # ---------------------------------------------------------------------------
 WM_D, WM_B = fit_text("SairaI-900-112.ttf", "GREENFIELD", (6, 8, 588, 82))
-AS_D, AS_B = fit_text("Saira-600-125.ttf", "AUTO SALES", (150, 112, 400, 30), tracking_em=0.42)
-RULE = dict(x1=40, x2=560, y=100)
+# Heavy upright AUTO SALES, centred under GREENFIELD (the live site's logo has a
+# bold white AUTO SALES under the name — keep that recognisable).
+AS_D, AS_B = fit_text("Saira-900-112.ttf", "AUTO SALES", (120, 104, 360, 38), tracking_em=0.1)
+RULE = dict(x1=40, x2=560, y=93)
 
 data = dict(
     hexOuter=HEX_OUTER, hexInner=HEX_INNER, hexEdge=HEX_EDGE,

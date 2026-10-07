@@ -25,6 +25,7 @@ export default function Badge({ flags = true, glint = false, className, title }:
       aria-hidden={title ? undefined : true}
       aria-label={title}
       focusable="false"
+      overflow="visible"
       dangerouslySetInnerHTML={{ __html: badgeInner(uid, { flags, glint }) }}
     />
   );

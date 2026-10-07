@@ -19,6 +19,7 @@ export default function Wordmark({ animated = true, className, title }: Props) {
       aria-hidden={title ? undefined : true}
       aria-label={title}
       focusable="false"
+      overflow="visible"
       dangerouslySetInnerHTML={{ __html: wordmarkInner(uid, { animated }) }}
     />
   );

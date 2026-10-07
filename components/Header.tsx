@@ -23,6 +23,15 @@ export default function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  // "Rev" the logo on tap (phones have no hover): full glow, fast flags, for a moment.
+  const [rev, setRev] = useState(false);
+  const revTimer = useRef<number | undefined>(undefined);
+  const revLogo = () => {
+    setRev(true);
+    window.clearTimeout(revTimer.current);
+    revTimer.current = window.setTimeout(() => setRev(false), 1600);
+  };
+  useEffect(() => () => window.clearTimeout(revTimer.current), []);
   const menuBtn = useRef<HTMLButtonElement>(null);
   const { saved } = useSaved();
 
@@ -69,11 +78,18 @@ export default function Header() {
           Skip to content
         </a>
 
+        {/* Glowing red rail along the bottom edge */}
+        <span aria-hidden="true" className="gas-rail pointer-events-none absolute inset-x-0 -bottom-px" />
+
         <div className="container-x flex h-[var(--header-h)] items-center justify-between gap-2">
           <Link
             href="/"
-            className="relative isolate flex min-w-0 items-center self-stretch px-1"
+            className="gas-logo relative isolate flex min-w-0 items-center self-stretch px-1"
             aria-label="Greenfield Auto Sales, home"
+            data-rev={rev ? "1" : undefined}
+            onPointerDown={(e) => {
+              if (e.pointerType !== "mouse") revLogo();
+            }}
           >
             {/* Two crossed checkered flags waving behind the whole lockup */}
             <WavingFlags className="pointer-events-none absolute opacity-90 inset-y-0 -left-3 -right-3 -z-10 h-full w-[calc(100%+1.5rem)] md:-left-5 md:w-[calc(100%+2.5rem)]" />

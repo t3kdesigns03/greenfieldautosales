@@ -54,8 +54,8 @@ export default function Logo({
   }
   return (
     <span className={`inline-flex items-center gap-1.5 ${className ?? ""}`}>
-      <Badge className={`shrink-0 ${badgeClass}`} glint={animate} flags={badgeFlags} />
-      <Wordmark className={`shrink-0 ${wordmarkClass}`} animated={animate} />
+      <Badge className={`gas-badge shrink-0 ${badgeClass}`} glint={animate} flags={badgeFlags} />
+      <Wordmark className={`gas-wm shrink-0 ${wordmarkClass}`} animated={animate} />
       <span className="sr-only">Greenfield Auto Sales</span>
     </span>
   );
