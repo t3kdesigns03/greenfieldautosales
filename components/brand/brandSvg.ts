@@ -14,6 +14,7 @@
  *   .gas-glint  — Spyder-style light sweep across the chrome G and the letters
  */
 import { badge as B, wordmark as W } from "./brandPaths";
+import { flagsSvgMarkup } from "./flagGeometry";
 
 const f = (n: number) => +n.toFixed(2);
 
@@ -232,3 +233,24 @@ const svgOpen = (viewBox: string, w: number, h: number) =>
 export const iconSvg = () => `${svgOpen(badgeViewBox(false), 200, 220)}${badgeInner("i", { flags: false })}</svg>`;
 export const badgeSvg = () => `${svgOpen(badgeViewBox(true), 272, 244)}${badgeInner("b", { flags: true })}</svg>`;
 export const wordmarkSvg = () => `${svgOpen(wordmarkViewBox, 600, 150)}${wordmarkInner("w", { animated: false })}</svg>`;
+
+/**
+ * The full header lockup as one still SVG: crossed checkered flags behind the
+ * checkered-G badge and the GREENFIELD / AUTO SALES wordmark. Proportions match
+ * the desktop header (flags box 386 × 112). Used for the Open Graph card.
+ */
+export const LOCKUP = { w: 386, h: 112 } as const;
+export const lockupSvg = () => {
+  const { w, h } = LOCKUP;
+  const bh = 84;
+  const bw = (bh * 200) / 220;
+  const wh = 64;
+  const ww = (wh * 600) / 150;
+  const bx = 24;
+  const wx = bx + bw + 6;
+  return `${svgOpen(`0 0 ${w} ${h}`, w, h)}
+<g opacity=".92">${flagsSvgMarkup("lf", w, h)}</g>
+<svg x="${f(bx)}" y="${f((h - bh) / 2)}" width="${f(bw)}" height="${bh}" viewBox="${badgeViewBox(false)}" overflow="visible">${badgeInner("lb", { flags: false })}</svg>
+<svg x="${f(wx)}" y="${f((h - wh) / 2)}" width="${f(ww)}" height="${wh}" viewBox="${wordmarkViewBox}" overflow="visible">${wordmarkInner("lw", { animated: false })}</svg>
+</svg>`;
+};

@@ -3,7 +3,7 @@ import Link from "next/link";
 import PageHeader from "@/components/PageHeader";
 import Reveal from "@/components/Reveal";
 import Icon, { type IconName } from "@/components/Icon";
-import { LogoMark } from "@/components/Logo";
+import BrandLockup from "@/components/brand/BrandLockup";
 import { about } from "@/content/copy";
 import { site, telHref } from "@/content/site";
 
@@ -31,7 +31,7 @@ export default function AboutPage() {
         <Reveal className="relative self-start overflow-hidden rounded-card bg-panel-2 p-6 text-paper">
           <div className="grain absolute inset-0" aria-hidden="true" />
           <div className="relative">
-            <LogoMark className="h-16 w-auto" />
+            <BrandLockup className="-ml-1 max-w-full" badgeClass="h-14 w-auto sm:h-16" wordmarkClass="h-[44px] w-auto sm:h-[50px]" padClass="py-4" />
             <p className="mt-4 font-display text-[26px] font-semibold leading-tight text-paper">{site.name}</p>
             <p className="text-[15px] text-muted">Used cars, trucks and SUVs. Family-owned.</p>
             <dl className="mt-5 space-y-2 border-t border-white/10 pt-4 text-[15px]">

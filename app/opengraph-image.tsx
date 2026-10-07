@@ -1,12 +1,12 @@
 import { ImageResponse } from "next/og";
 import { site } from "@/content/site";
-import { badgeDataUri, wordmarkDataUri } from "@/lib/markSvg";
+import { lockupDataUri, lockupSize } from "@/lib/markSvg";
 
 export const alt = `${site.name} — ${site.tagline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-/** Social card: the speed-badge lockup on carbon black with a red horizon glow. */
+/** Social card: the standard header lockup (flags + badge + wordmark) on carbon black with a red horizon glow. */
 export default function OgImage() {
   return new ImageResponse(
     (
@@ -23,9 +23,8 @@ export default function OgImage() {
           color: "#F2F3F5",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <img src={badgeDataUri} width={250} height={224} alt="" />
-          <img src={wordmarkDataUri} width={680} height={170} alt="" />
+        <div style={{ display: "flex", alignItems: "center", marginLeft: -40, marginTop: -24 }}>
+          <img src={lockupDataUri} width={1000} height={Math.round((1000 * lockupSize.h) / lockupSize.w)} alt="" />
         </div>
         <div style={{ fontSize: 54, fontWeight: 700, lineHeight: 1.1, maxWidth: 1050 }}>{site.tagline}</div>
         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 28, color: "#C7CCD4" }}>

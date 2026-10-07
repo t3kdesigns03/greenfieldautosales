@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { COLS, DARK, LIGHT, ROWS, SUB_U, SUB_V, geometry, patchPoints, shadeStops, type Geo } from "./flagGeometry";
 
 /**
  * Two crossed checkered flags, drawn on a canvas and waving continuously.
@@ -9,97 +10,17 @@ import { useEffect, useRef } from "react";
  *
  * Each flag is a cloth mesh: a wave runs from the pole out to the free end,
  * the checks bend with the fabric, and light/shadow travels across the folds.
- * On load the poles rise, the cloths unfurl, and a shockwave + sparks fire
+ * With `intro` (the header copy), on load the poles rise, the cloths unfurl, and a shockwave + sparks fire
  * as the badge lands. Hovering or tapping the logo (".gas-logo") speeds the
  * wave up and throws another burst of sparks.
  * One frame is drawn when the user prefers reduced motion. The loop pauses
  * while the tab is hidden or the canvas is off screen.
  */
 
-type Side = -1 | 1; // -1 = flag flies to the left, 1 = to the right
-
-const COLS = 5; // checks along the fly
-const ROWS = 4; // checks down the hoist
-const SUB_U = 8; // subdivisions per check, along the fly (smooth curves)
-const SUB_V = 3;
-
-const LIGHT = "#eceef2";
-const DARK = "#2a2c31";
-
-type Geo = {
-  top: [number, number]; // pole tip
-  foot: [number, number]; // pole foot
-  hoist: number; // 0..1 of the pole length the cloth is attached along
-  fly: [number, number]; // vector from the hoist to the free end (px)
-  amp: number; // wave amplitude at the free end (px)
-  period: number; // seconds per wave
-  waves: number; // waves visible across the cloth
-  phase: number;
-};
-
-/**
- * Proportions follow the original greenfieldautosales.net logo: two poles
- * crossed low and centred, finials up top, and each cloth falling away
- * outward and down from the top of its pole.
- */
-function geometry(w: number, h: number, side: Side): Geo {
-  const cx = w * 0.62; // centred under the wordmark, like the original
-  return {
-    top: [cx + side * w * 0.085, h * 0.07],
-    foot: [cx - side * w * 0.035, h * 1.02],
-    hoist: 0.52,
-    fly: [side * w * 0.28, h * 0.34],
-    amp: h * 0.08,
-    period: side < 0 ? 2.1 : 2.35,
-    waves: 1.15,
-    phase: side < 0 ? 0 : 1.7,
-  };
-}
-
-const phaseAt = (g: Geo, t: number, u: number, v: number) =>
-  2 * Math.PI * (g.waves * u - t / g.period) + 0.75 * v + g.phase;
-
-/** Point on the cloth: u = 0 at the pole → 1 at the free end, v = 0 top → 1 bottom. */
-function point(g: Geo, t: number, u: number, v: number): [number, number] {
-  const hx = g.top[0] + (g.foot[0] - g.top[0]) * g.hoist * v;
-  const hy = g.top[1] + (g.foot[1] - g.top[1]) * g.hoist * v;
-  const len = Math.hypot(g.fly[0], g.fly[1]);
-  const dx = g.fly[0] / len;
-  const dy = g.fly[1] / len;
-  // normal to the fly direction, pointing up
-  let nx = dy;
-  let ny = -dx;
-  if (ny > 0) (nx = -nx), (ny = -ny);
-  const ph = phaseAt(g, t, u, v);
-  const a = g.amp * Math.pow(u, 1.15) * Math.sin(ph);
-  // The cloth bunches toward the pole on each crest (foreshortening).
-  const along = u * len - len * 0.08 * u * (1 - Math.cos(ph)) * 0.5;
-  return [hx + dx * along + nx * a, hy + dy * along + ny * a];
-}
-
-function slope(g: Geo, t: number, u: number, v: number) {
-  return Math.cos(phaseAt(g, t, u, v)) * Math.min(1, u * 2.2);
-}
-
 function tracePatch(ctx: CanvasRenderingContext2D, g: Geo, t: number, u0: number, u1: number, v0: number, v1: number, su: number, sv: number) {
-  let p = point(g, t, u0, v0);
-  ctx.moveTo(p[0], p[1]);
-  for (let k = 1; k <= su; k++) {
-    p = point(g, t, u0 + ((u1 - u0) * k) / su, v0);
-    ctx.lineTo(p[0], p[1]);
-  }
-  for (let k = 1; k <= sv; k++) {
-    p = point(g, t, u1, v0 + ((v1 - v0) * k) / sv);
-    ctx.lineTo(p[0], p[1]);
-  }
-  for (let k = su - 1; k >= 0; k--) {
-    p = point(g, t, u0 + ((u1 - u0) * k) / su, v1);
-    ctx.lineTo(p[0], p[1]);
-  }
-  for (let k = sv - 1; k >= 1; k--) {
-    p = point(g, t, u0, v0 + ((v1 - v0) * k) / sv);
-    ctx.lineTo(p[0], p[1]);
-  }
+  const pts = patchPoints(g, t, u0, u1, v0, v1, su, sv);
+  ctx.moveTo(pts[0][0], pts[0][1]);
+  for (let k = 1; k < pts.length; k++) ctx.lineTo(pts[k][0], pts[k][1]);
   ctx.closePath();
 }
 
@@ -167,22 +88,9 @@ function drawFlag(ctx: CanvasRenderingContext2D, g: Geo, t: number, scale: numbe
 
   // Light and shadow across the folds: a gradient along the fly whose stops
   // follow the cloth's slope, so highlights travel with the waves.
-  const N = 40;
-  const p0 = point(g, t, 0, 0.5);
-  const p1 = point(g, t, 1, 0.5);
-  const ex = p1[0] - p0[0];
-  const ey = p1[1] - p0[1];
-  const span = ex * ex + ey * ey || 1;
-  const shade = ctx.createLinearGradient(p0[0], p0[1], p1[0], p1[1]);
-  let last = 0;
-  for (let k = 0; k <= N; k++) {
-    const u = k / N;
-    const p = point(g, t, u, 0.5);
-    const off = Math.min(1, Math.max(last, ((p[0] - p0[0]) * ex + (p[1] - p0[1]) * ey) / span));
-    last = off;
-    const sl = slope(g, t, u, 0.5);
-    shade.addColorStop(off, sl > 0 ? `rgba(255,255,255,${(sl * 0.22).toFixed(3)})` : `rgba(0,0,0,${(-sl * 0.45).toFixed(3)})`);
-  }
+  const sh = shadeStops(g, t);
+  const shade = ctx.createLinearGradient(sh.from[0], sh.from[1], sh.to[0], sh.to[1]);
+  for (const [o, c] of sh.stops) shade.addColorStop(o, c);
   ctx.beginPath();
   tracePatch(ctx, g, t, 0, 1, 0, 1, COLS * SUB_U, ROWS * SUB_V);
   ctx.fillStyle = shade;
@@ -205,7 +113,7 @@ const easeOutCubic = (x: number) => 1 - Math.pow(1 - x, 3);
 const easeOutBack = (x: number) => 1 + 2.4 * Math.pow(x - 1, 3) + 1.4 * Math.pow(x - 1, 2);
 const SPARK_HUES = ["#ffffff", "#ffd2d5", "#ff2a36", "#ff7a3a", "#ff2a36"];
 
-export default function WavingFlags({ className }: { className?: string }) {
+export default function WavingFlags({ className, intro: withIntro = false }: { className?: string; intro?: boolean }) {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -233,7 +141,7 @@ export default function WavingFlags({ className }: { className?: string }) {
     const cssAge = badgeAnim ? Number(badgeAnim.currentTime) / 1000 : 0;
     const born = last - Math.min(cssAge, 0.35) * 1000;
     // Entrance: poles rise, cloth unfurls, then a shockwave + sparks as the badge lands.
-    let intro = !reduce.matches;
+    let intro = withIntro && !reduce.matches;
     let landed = false;
     let wasRevving = false;
     // Adaptive quality: if frames run long on a slow phone, drop the canvas
@@ -395,7 +303,7 @@ export default function WavingFlags({ className }: { className?: string }) {
       io.disconnect();
       reduce.removeEventListener("change", start);
     };
-  }, []);
+  }, [withIntro]);
 
   return <canvas ref={ref} aria-hidden="true" className={className} />;
 }

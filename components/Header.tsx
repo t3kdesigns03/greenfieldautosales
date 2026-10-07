@@ -84,7 +84,7 @@ export default function Header() {
         <div className="container-x flex h-[var(--header-h)] items-center justify-between gap-2">
           <Link
             href="/"
-            className="gas-logo relative isolate flex min-w-0 items-center self-stretch px-1"
+            className="gas-logo gas-intro relative isolate flex min-w-0 items-center self-stretch px-1"
             aria-label="Greenfield Auto Sales, home"
             data-rev={rev ? "1" : undefined}
             onPointerDown={(e) => {
@@ -92,7 +92,7 @@ export default function Header() {
             }}
           >
             {/* Two crossed checkered flags waving behind the whole lockup */}
-            <WavingFlags className="pointer-events-none absolute opacity-90 inset-y-0 -left-3 -right-3 -z-10 h-full w-[calc(100%+1.5rem)] md:-left-5 md:w-[calc(100%+2.5rem)]" />
+            <WavingFlags intro className="pointer-events-none absolute opacity-90 inset-y-0 -left-3 -right-3 -z-10 h-full w-[calc(100%+1.5rem)] md:-left-5 md:w-[calc(100%+2.5rem)]" />
             {/* Phones: badge + prismatic wordmark, scaled to fit 320px next to three 44px buttons */}
             <Logo
               animate

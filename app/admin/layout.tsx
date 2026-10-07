@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { LogoMark } from "@/components/Logo";
+import BrandLockup from "@/components/brand/BrandLockup";
 import { LogoutButton } from "@/components/admin/AdminActions";
 import { isAdmin } from "@/lib/adminAuth";
 
@@ -19,8 +19,8 @@ export default async function AdminLayout({ children }: { children: ReactNode })
       <header className="border-b border-white/[0.08] bg-panel">
         <div className="container-x flex h-16 items-center justify-between gap-3">
           <Link href="/admin" className="flex min-h-tap items-center gap-2.5 font-semibold">
-            <LogoMark className="h-10 w-auto" flags={false} />
-            <span>Inventory admin</span>
+            <BrandLockup badgeClass="h-10 w-auto" wordmarkClass="h-[30px] w-auto" padClass="py-1.5" />
+            <span className="hidden sm:inline">Inventory admin</span>
           </Link>
           <div className="flex items-center gap-2">
             <a href="/inventory" target="_blank" rel="noopener noreferrer" className="btn-ghost hidden px-4 text-[14px] sm:inline-flex">

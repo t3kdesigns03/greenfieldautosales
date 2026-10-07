@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Logo from "@/components/Logo";
+import BrandLockup from "@/components/brand/BrandLockup";
 import Icon from "@/components/Icon";
 import { site, telHref, smsHref, fullAddress, mapsLink } from "@/content/site";
 
@@ -11,7 +11,9 @@ export default function Footer() {
       <div className="h-px bg-gradient-to-r from-transparent via-gold/70 to-transparent" />
       <div className="container-x grid gap-10 py-12 md:grid-cols-[1.3fr_1fr_1fr_0.8fr]">
         <div>
-          <Logo badgeClass="h-16 w-auto" wordmarkClass="h-[52px] w-auto" />
+          <Link href="/" aria-label="Greenfield Auto Sales, home" className="-ml-1 inline-block">
+            <BrandLockup badgeClass="h-16 w-auto" wordmarkClass="h-[50px] w-auto" padClass="py-4" />
+          </Link>
           <p className="mt-4 max-w-xs font-display text-[19px] leading-snug text-fg/90">{site.tagline}</p>
           <p className="mt-3 text-[15px] text-muted">
             Family-owned and selling in Greenfield since {site.since.month} {site.since.year}.
